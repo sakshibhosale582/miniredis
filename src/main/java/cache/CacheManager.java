@@ -11,6 +11,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import com.sakshi.miniredis.dto.StatsResponse;
+
 import utils.AppConstants;
 import utils.ValidationUtils;
 
@@ -199,14 +201,13 @@ public class CacheManager {
         return lruCache.size();
     }
 
-    public String stats() {
-        purgeExpiredEntries();
+    public StatsResponse stats() {
 
-        logger.info("Cache statistics requested.");
+    purgeExpiredEntries();
 
-        return stats.formatWithActiveKeys(lruCache.size());
-    }
+    return stats.toResponse(lruCache.size());
 
+}
     public void save() throws IOException {
         persistenceManager.save(lruCache.snapshot());
         commandHistory.record("SAVE");

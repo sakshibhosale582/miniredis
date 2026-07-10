@@ -2,13 +2,16 @@ package com.sakshi.miniredis.controller;
 
 import cache.CacheManager;
 import com.sakshi.miniredis.dto.SetRequest;
+import com.sakshi.miniredis.dto.StatsResponse;
 import com.sakshi.miniredis.response.ApiResponse;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import com.sakshi.miniredis.dto.StatsResponse;
 
+@CrossOrigin(origins = "http://localhost:5173")
 @RestController
 @RequestMapping("/cache")
 public class CacheController {
@@ -72,12 +75,16 @@ public class CacheController {
     }
 
     @GetMapping("/stats")
-    public ResponseEntity<ApiResponse<String>> stats() {
+public ResponseEntity<ApiResponse<StatsResponse>> stats() {
 
-        return ResponseEntity.ok(
-                new ApiResponse<>(true, "Statistics fetched successfully", cacheManager.stats()));
-    }
-
+    return ResponseEntity.ok(
+            new ApiResponse<>(
+                    true,
+                    "Statistics fetched successfully",
+                    cacheManager.stats()
+            )
+    );
+}
     @GetMapping("/history")
     public ResponseEntity<ApiResponse<Object>> history() {
 

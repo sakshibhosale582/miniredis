@@ -1,5 +1,6 @@
 package cache;
 
+import com.sakshi.miniredis.dto.StatsResponse;
 import java.util.concurrent.atomic.AtomicLong;
 
 public class CacheStats {
@@ -44,42 +45,38 @@ public class CacheStats {
     }
 
     public double getHitRatio() {
-        long hits = cacheHits.get();
-        long misses = cacheMisses.get();
-        long total = hits + misses;
+
+        long total = cacheHits.get() + cacheMisses.get();
+
         if (total == 0) {
-            return 0.0;
+            return 0;
         }
-        return (hits * 100.0) / total;
+
+        return (cacheHits.get() * 100.0) / total;
     }
 
     public void reset() {
+
         totalRequests.set(0);
         cacheHits.set(0);
         cacheMisses.set(0);
         expiredKeysRemoved.set(0);
+
     }
 
-    @Override
-    public String toString() {
-        return String.format(
-                "Total Requests: %d%nHits: %d%nMisses: %d%nActive Keys: %d%nExpired Keys Removed: %d%nHit Ratio: %.0f%%",
-                getTotalRequests(),
-                getCacheHits(),
-                getCacheMisses(),
-                0,
-                getExpiredKeysRemoved(),
-                getHitRatio());
-    }
+    public StatsResponse toResponse(int activeKeys) {
 
-    public String formatWithActiveKeys(int activeKeys) {
-        return String.format(
-                "Total Requests: %d%nHits: %d%nMisses: %d%nActive Keys: %d%nExpired Keys Removed: %d%nHit Ratio: %.0f%%",
+        return new StatsResponse(
+
                 getTotalRequests(),
                 getCacheHits(),
                 getCacheMisses(),
                 activeKeys,
                 getExpiredKeysRemoved(),
-                getHitRatio());
+                getHitRatio()
+
+        );
+
     }
+
 }

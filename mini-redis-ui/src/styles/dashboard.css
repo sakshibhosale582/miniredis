@@ -1,0 +1,212 @@
+/* ---------- Google Font ---------- */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+*{
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+    background:#f4f7fc;
+    margin:0;
+    padding:0;
+}
+
+/* ---------- Header ---------- */
+
+.dashboard-header{
+
+    background:linear-gradient(135deg,#2563eb,#1e40af);
+
+    color:white;
+
+    border-radius:18px;
+
+    padding:25px 35px;
+
+    margin-bottom:30px;
+
+    box-shadow:0 12px 30px rgba(0,0,0,.12);
+
+}
+
+.dashboard-title{
+
+    font-size:34px;
+
+    font-weight:700;
+
+    margin-bottom:6px;
+
+}
+
+.dashboard-subtitle{
+
+    color:#dbeafe;
+
+    font-size:15px;
+
+    margin:0;
+
+}
+
+.version-badge{
+
+    background:white;
+
+    color:#2563eb;
+
+    padding:6px 16px;
+
+    border-radius:30px;
+
+    font-weight:600;
+
+}
+
+/* ---------- Cards ---------- */
+
+.card{
+
+    border:none !important;
+
+    border-radius:18px;
+
+    box-shadow:0 10px 25px rgba(0,0,0,.08);
+
+    transition:.3s;
+
+}
+
+.card:hover{
+
+    transform:translateY(-5px);
+
+    box-shadow:0 18px 35px rgba(0,0,0,.12);
+
+}
+
+.card-header{
+
+    border:none;
+
+    font-weight:600;
+
+    font-size:18px;
+
+    border-radius:18px 18px 0 0 !important;
+
+}
+
+/* ---------- Buttons ---------- */
+
+.btn{
+
+    border-radius:12px;
+
+    font-weight:600;
+
+}
+
+.btn-success{
+
+    background:#10b981;
+
+    border:none;
+
+}
+
+.btn-primary{
+
+    background:#2563eb;
+
+    border:none;
+
+}
+
+.btn-danger{
+
+    border:none;
+
+}
+
+.btn-warning{
+
+    border:none;
+
+}
+
+/* ---------- Inputs ---------- */
+
+.form-control{
+
+    border-radius:12px;
+
+    height:48px;
+
+}
+
+.form-control:focus{
+
+    box-shadow:none;
+
+    border-color:#2563eb;
+
+}
+
+/* ---------- Stats ---------- */
+
+.stat-card{
+
+    text-align:center;
+
+    padding:25px;
+
+}
+
+.stat-card h3{
+
+    font-weight:700;
+
+    margin-top:10px;
+
+}
+
+.stat-card p{
+
+    color:#64748b;
+
+    margin-bottom:0;
+
+}
+
+/* ---------- Lists ---------- */
+
+.list-group-item{
+
+    border:none;
+
+    border-bottom:1px solid #f1f5f9;
+
+}
+
+/* ---------- Alerts ---------- */
+
+.alert{
+
+    border:none;
+
+    border-radius:12px;
+
+}
+
+/* ---------- Responsive ---------- */
+
+@media(max-width:768px){
+
+.dashboard-title{
+
+font-size:26px;
+
+}
+
+}
