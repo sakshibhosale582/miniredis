@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
 import api from "../services/api";
+
 import {
   BsKeyFill,
   BsGraphUpArrow,
   BsXCircleFill,
-  BsLightningChargeFill
+  BsLightningChargeFill,
+  BsArrowRepeat
 } from "react-icons/bs";
 
 function StatsCard() {
@@ -21,13 +23,13 @@ function StatsCard() {
 
     try {
 
-      const response = await api.get("/stats");
+      const res = await api.get("/stats");
 
-      setStats(response.data.data);
+      setStats(res.data.data);
 
-    } catch (error) {
+    } catch (e) {
 
-      console.log(error);
+      console.log(e);
 
     }
 
@@ -37,111 +39,119 @@ function StatsCard() {
 
     loadStats();
 
-  }, []);
+    const timer = setInterval(loadStats,3000);
 
-  return (
+    return ()=>clearInterval(timer);
 
-    <>
+  },[]);
 
-      <div className="row g-3">
+  const cards=[
 
-        <div className="col-6">
+    {
+      title:"Active Keys",
+      value:stats.activeKeys,
+      color:"primary",
+      icon:<BsKeyFill/>
+    },
 
-          <div className="card text-center shadow border-0">
+    {
+      title:"Cache Hits",
+      value:stats.cacheHits,
+      color:"success",
+      icon:<BsGraphUpArrow/>
+    },
 
-            <div className="card-body">
+    {
+      title:"Cache Misses",
+      value:stats.cacheMisses,
+      color:"danger",
+      icon:<BsXCircleFill/>
+    },
 
-              <BsKeyFill
-                size={35}
-                className="text-primary mb-2"
-              />
+    {
+      title:"Hit Ratio",
+      value:stats.hitRatio.toFixed(0)+"%",
+      color:"warning",
+      icon:<BsLightningChargeFill/>
+    }
 
-              <h3>{stats.activeKeys}</h3>
+  ];
 
-              <p className="mb-0">
-                Active Keys
-              </p>
+  return(
 
-            </div>
+<div className="card">
 
-          </div>
+<div className="card-header bg-white d-flex justify-content-between align-items-center">
 
-        </div>
+<h5 className="mb-0 fw-bold">
 
-        <div className="col-6">
+System Statistics
 
-          <div className="card text-center shadow border-0">
+</h5>
 
-            <div className="card-body">
+<button
+className="btn btn-outline-primary btn-sm"
+onClick={loadStats}
+>
 
-              <BsGraphUpArrow
-                size={35}
-                className="text-success mb-2"
-              />
+<BsArrowRepeat/>
 
-              <h3>{stats.cacheHits}</h3>
+</button>
 
-              <p className="mb-0">
-                Cache Hits
-              </p>
+</div>
 
-            </div>
+<div className="card-body">
 
-          </div>
+<div className="row">
 
-        </div>
+{
 
-        <div className="col-6">
+cards.map((card,index)=>(
 
-          <div className="card text-center shadow border-0">
+<div
+className="col-md-6 col-xl-3 mb-3"
+key={index}
+>
 
-            <div className="card-body">
+<div
+className={`border border-${card.color} rounded-4 p-4 h-100 shadow-sm`}
+>
 
-              <BsXCircleFill
-                size={35}
-                className="text-danger mb-2"
-              />
+<div
+className={`text-${card.color} fs-2 mb-3`}
+>
 
-              <h3>{stats.cacheMisses}</h3>
+{card.icon}
 
-              <p className="mb-0">
-                Cache Misses
-              </p>
+</div>
 
-            </div>
+<h2 className="fw-bold">
 
-          </div>
+{card.value}
 
-        </div>
+</h2>
 
-        <div className="col-6">
+<div className="text-secondary">
 
-          <div className="card text-center shadow border-0">
+{card.title}
 
-            <div className="card-body">
+</div>
 
-              <BsLightningChargeFill
-                size={35}
-                className="text-warning mb-2"
-              />
+</div>
 
-              <h3>{stats.hitRatio.toFixed(0)}%</h3>
+</div>
 
-              <p className="mb-0">
-                Hit Ratio
-              </p>
+))
 
-            </div>
+}
 
-          </div>
+</div>
 
-        </div>
+</div>
 
-      </div>
+</div>
 
-    </>
-
-  );
+);
 
 }
 

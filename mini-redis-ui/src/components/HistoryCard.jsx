@@ -1,88 +1,132 @@
 import { useEffect, useState } from "react";
 import api from "../services/api";
+import { toast } from "react-toastify";
+
+import {
+  BsClockHistory,
+  BsArrowClockwise
+} from "react-icons/bs";
 
 function HistoryCard() {
 
-    const [history, setHistory] = useState([]);
+  const [history, setHistory] = useState([]);
 
-    const loadHistory = async () => {
+  const loadHistory = async () => {
 
-        try {
+    try {
 
-            const response = await api.get("/history");
+      const res = await api.get("/history");
 
-            setHistory(response.data.data);
+      setHistory(res.data.data || []);
 
-        } catch (error) {
+    } catch {
 
-            console.log(error);
+      toast.error("Unable to load history");
 
-        }
+    }
 
-    };
+  };
 
-    useEffect(() => {
-        loadHistory();
-    }, []);
+  useEffect(() => {
 
-    return (
+    loadHistory();
 
-        <div className="card shadow mt-4">
+    const interval = setInterval(loadHistory,3000);
 
-            <div className="card-header bg-warning">
+    return ()=>clearInterval(interval);
 
-                <h4 className="mb-0">
-                    📜 Command History
-                </h4>
+  },[]);
 
-            </div>
+  return (
 
-            <div className="card-body">
+    <div className="card fade-in">
 
-                {
-                    history.length === 0 ?
+      <div className="card-header bg-success text-white d-flex justify-content-between align-items-center">
 
-                        <p>No History</p>
+        <div>
 
-                        :
+          <BsClockHistory className="me-2"/>
 
-                        <ul className="list-group">
-
-                            {
-
-                                history.map((item,index)=>(
-
-                                    <li
-                                        key={index}
-                                        className="list-group-item"
-                                    >
-
-                                        {item}
-
-                                    </li>
-
-                                ))
-
-                            }
-
-                        </ul>
-
-                }
-
-                <button
-                    className="btn btn-outline-warning mt-3"
-                    onClick={loadHistory}
-                >
-
-                    Refresh
-
-                </button>
-
-            </div>
+          Command History
 
         </div>
 
-    );
+        <button
+          className="btn btn-light btn-sm"
+          onClick={loadHistory}
+        >
+          <BsArrowClockwise/>
+        </button>
+
+      </div>
+
+      <div className="card-body scroll-area">
+
+        {
+
+          history.length===0 ?
+
+          (
+
+            <div
+              className="text-center text-secondary mt-5"
+            >
+
+              No Commands Executed
+
+            </div>
+
+          )
+
+          :
+
+          history.map((item,index)=>(
+
+            <div
+              key={index}
+              className="d-flex align-items-center border-bottom py-3"
+            >
+
+              <div
+                className="bg-success text-white rounded-circle d-flex justify-content-center align-items-center"
+                style={{
+                  width:"42px",
+                  height:"42px",
+                  minWidth:"42px"
+                }}
+              >
+
+                <BsClockHistory/>
+
+              </div>
+
+              <div className="ms-3">
+
+                <div className="fw-semibold">
+
+                  {item}
+
+                </div>
+
+                <small className="text-muted">
+
+                  Cache Operation
+
+                </small>
+
+              </div>
+
+            </div>
+
+          ))
+
+        }
+
+      </div>
+
+    </div>
+
+  );
 
 }
 

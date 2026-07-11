@@ -95,7 +95,8 @@ public class CacheCommandExecutor {
     }
 
     public CommandResult executeStats() {
-        return CommandResult.success(cacheManager.stats());
+    return CommandResult.success(cacheManager.stats().toString());
+
     }
 
     public CommandResult executeSave() {

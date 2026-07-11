@@ -7,6 +7,7 @@ C:\Users\DELL\Documents\mini-redis1\src\main\java\cache\LRUCache.java
 C:\Users\DELL\Documents\mini-redis1\src\main\java\cache\PersistenceManager.java
 C:\Users\DELL\Documents\mini-redis1\src\main\java\com\sakshi\miniredis\controller\CacheController.java
 C:\Users\DELL\Documents\mini-redis1\src\main\java\com\sakshi\miniredis\dto\SetRequest.java
+C:\Users\DELL\Documents\mini-redis1\src\main\java\com\sakshi\miniredis\dto\StatsResponse.java
 C:\Users\DELL\Documents\mini-redis1\src\main\java\com\sakshi\miniredis\exception\ErrorResponse.java
 C:\Users\DELL\Documents\mini-redis1\src\main\java\com\sakshi\miniredis\exception\GlobalExceptionHandler.java
 C:\Users\DELL\Documents\mini-redis1\src\main\java\com\sakshi\miniredis\MiniRedisApplication.java

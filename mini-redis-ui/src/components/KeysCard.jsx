@@ -1,80 +1,143 @@
 import { useEffect, useState } from "react";
 import api from "../services/api";
+import { toast } from "react-toastify";
+
+import {
+  BsKeyFill,
+  BsArrowClockwise,
+  BsClipboard
+} from "react-icons/bs";
 
 function KeysCard() {
 
   const [keys, setKeys] = useState([]);
+  const [search, setSearch] = useState("");
 
   const loadKeys = async () => {
 
     try {
 
-      const response = await api.get("/keys");
+      const res = await api.get("/keys");
 
-      setKeys(response.data.data);
+      setKeys(res.data.data || []);
 
-    } catch (error) {
+    } catch {
 
-      console.log(error);
+      toast.error("Unable to load keys");
 
     }
 
   };
 
   useEffect(() => {
+
     loadKeys();
-  }, []);
+
+    const interval = setInterval(loadKeys,3000);
+
+    return ()=>clearInterval(interval);
+
+  },[]);
+
+  const copyKey = (key)=>{
+
+    navigator.clipboard.writeText(key);
+
+    toast.success("Key copied");
+
+  };
+
+  const filteredKeys = keys.filter((key)=>
+
+      key.toLowerCase().includes(search.toLowerCase())
+
+  );
 
   return (
 
-    <div className="card shadow mt-4">
+    <div className="card fade-in">
 
-      <div className="card-header bg-success text-white">
+      <div className="card-header bg-primary text-white d-flex justify-content-between align-items-center">
 
-        <h4 className="mb-0">
-          🔑 Current Keys
-        </h4>
+        <div>
+
+          <BsKeyFill className="me-2"/>
+
+          Current Keys
+
+        </div>
+
+        <button
+          className="btn btn-light btn-sm"
+          onClick={loadKeys}
+        >
+          <BsArrowClockwise/>
+        </button>
 
       </div>
 
       <div className="card-body">
 
-        {
-          keys.length === 0 ?
+        <input
+          className="form-control mb-3"
+          placeholder="Search key..."
+          value={search}
+          onChange={(e)=>setSearch(e.target.value)}
+        />
 
-          <p>No Keys Found</p>
+        <div className="scroll-area">
 
-          :
+          {
 
-          <ul className="list-group">
+            filteredKeys.length===0 ?
 
-            {
-              keys.map((key,index)=>(
+            <div className="text-center text-secondary mt-5">
 
-                <li
-                  key={index}
-                  className="list-group-item"
-                >
+              No Keys Found
 
-                  {key}
+            </div>
 
-                </li>
+            :
 
-              ))
-            }
+            <ul className="list-group keys-list">
 
-          </ul>
+              {
 
-        }
+                filteredKeys.map((key,index)=>(
 
-        <button
-          className="btn btn-outline-success mt-3"
-          onClick={loadKeys}
-        >
+                  <li
+                    key={index}
+                    className="d-flex justify-content-between align-items-center"
+                  >
 
-          Refresh
+                    <span>
 
-        </button>
+                      <BsKeyFill className="me-2 text-primary"/>
+
+                      {key}
+
+                    </span>
+
+                    <button
+                      className="btn btn-outline-primary btn-sm"
+                      onClick={()=>copyKey(key)}
+                    >
+
+                      <BsClipboard/>
+
+                    </button>
+
+                  </li>
+
+                ))
+
+              }
+
+            </ul>
+
+          }
+
+        </div>
 
       </div>
 

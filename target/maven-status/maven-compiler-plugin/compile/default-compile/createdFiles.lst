@@ -9,7 +9,9 @@ com\sakshi\miniredis\dto\SetRequest.class
 commands\CacheCommandExecutor.class
 utils\ValidationUtils.class
 cache\CacheCleaner.class
+com\sakshi\miniredis\dto\StatsResponse.class
 cache\PersistenceManager.class
+com\sakshi\miniredis\response\ApiResponse.class
 com\sakshi\miniredis\exception\GlobalExceptionHandler.class
 com\sakshi\miniredis\MiniRedisApplication.class
 cache\CacheEntry.class

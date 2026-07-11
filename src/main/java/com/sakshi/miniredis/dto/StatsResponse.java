@@ -47,4 +47,22 @@ public class StatsResponse {
     public double getHitRatio() {
         return hitRatio;
     }
+
+    @Override
+    public String toString() {
+        return String.format(
+                "Total Requests: %d%n" +
+                "Cache Hits: %d%n" +
+                "Cache Misses: %d%n" +
+                "Active Keys: %d%n" +
+                "Expired Keys Removed: %d%n" +
+                "Hit Ratio: %.0f%%",
+                totalRequests,
+                cacheHits,
+                cacheMisses,
+                activeKeys,
+                expiredKeysRemoved,
+                hitRatio
+        );
+    }
 }
