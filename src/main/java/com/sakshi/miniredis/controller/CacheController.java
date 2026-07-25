@@ -1,23 +1,26 @@
 package com.sakshi.miniredis.controller;
 
-import cache.CacheManager;
+import java.io.IOException;
+import java.util.List;
+
+import com.sakshi.miniredis.cache.CacheManager;
 import com.sakshi.miniredis.dto.SetRequest;
 import com.sakshi.miniredis.dto.StatsResponse;
 import com.sakshi.miniredis.response.ApiResponse;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import com.sakshi.miniredis.dto.StatsResponse;
 
-@CrossOrigin(origins = "http://localhost:5173")
 @RestController
-@RequestMapping("/cache")
+@RequestMapping("/api/cache")
 public class CacheController {
 
-    @Autowired
-    private CacheManager cacheManager;
+    private final CacheManager cacheManager;
+
+    public CacheController(CacheManager cacheManager) {
+        this.cacheManager = cacheManager;
+    }
 
     @GetMapping("/hello")
     public ResponseEntity<ApiResponse<String>> hello() {
@@ -28,7 +31,11 @@ public class CacheController {
     @PostMapping("/set")
     public ResponseEntity<ApiResponse<Void>> set(@Valid @RequestBody SetRequest request) {
 
-        cacheManager.set(request.getKey(), request.getValue());
+        if (request.getTtlSeconds() != null) {
+            cacheManager.set(request.getKey(), request.getValue(), request.getTtlSeconds());
+        } else {
+            cacheManager.set(request.getKey(), request.getValue());
+        }
 
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(new ApiResponse<>(true, "Key stored successfully", null));
@@ -68,32 +75,30 @@ public class CacheController {
     }
 
     @GetMapping("/keys")
-    public ResponseEntity<ApiResponse<Object>> keys() {
+    public ResponseEntity<ApiResponse<List<String>>> keys() {
 
         return ResponseEntity.ok(
                 new ApiResponse<>(true, "Keys fetched successfully", cacheManager.keys()));
     }
 
     @GetMapping("/stats")
-public ResponseEntity<ApiResponse<StatsResponse>> stats() {
+    public ResponseEntity<ApiResponse<StatsResponse>> stats() {
+        return ResponseEntity.ok(
+                new ApiResponse<>(
+                        true,
+                        "Statistics fetched successfully",
+                        cacheManager.stats()));
+    }
 
-    return ResponseEntity.ok(
-            new ApiResponse<>(
-                    true,
-                    "Statistics fetched successfully",
-                    cacheManager.stats()
-            )
-    );
-}
     @GetMapping("/history")
-    public ResponseEntity<ApiResponse<Object>> history() {
+    public ResponseEntity<ApiResponse<List<String>>> history() {
 
         return ResponseEntity.ok(
                 new ApiResponse<>(true, "History fetched successfully", cacheManager.history()));
     }
 
     @PostMapping("/save")
-    public ResponseEntity<ApiResponse<Void>> save() throws Exception {
+    public ResponseEntity<ApiResponse<Void>> save() throws IOException {
 
         cacheManager.save();
 
@@ -117,5 +122,10 @@ public ResponseEntity<ApiResponse<StatsResponse>> stats() {
 
         return ResponseEntity.ok(
                 new ApiResponse<>(true, "Cache cleared successfully", null));
+    }
+
+    @GetMapping("/health")
+    public ResponseEntity<ApiResponse<String>> health() {
+        return ResponseEntity.ok(new ApiResponse<>(true, "API is healthy", "UP"));
     }
 }

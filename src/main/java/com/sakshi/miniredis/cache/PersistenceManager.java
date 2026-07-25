@@ -1,4 +1,4 @@
-package cache;
+package com.sakshi.miniredis.cache;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -7,12 +7,13 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class PersistenceManager {
 
-    private static final Logger LOGGER = Logger.getLogger(PersistenceManager.class.getName());
+    private static final Logger logger = LoggerFactory.getLogger(PersistenceManager.class);
 
     private final Path persistencePath;
 
@@ -37,14 +38,14 @@ public class PersistenceManager {
     @SuppressWarnings("unchecked")
     public Map<String, CacheEntry> load() {
         if (!Files.exists(persistencePath)) {
-            LOGGER.info("Persistence file not found. Starting with an empty cache.");
+            logger.info("Persistence file not found. Starting with an empty cache.");
             return new HashMap<>();
         }
 
         try (ObjectInputStream inputStream = new ObjectInputStream(Files.newInputStream(persistencePath))) {
             Object data = inputStream.readObject();
             if (!(data instanceof Map<?, ?> rawMap)) {
-                LOGGER.warning("Persistence file format is invalid. Starting with an empty cache.");
+                logger.warn("Persistence file format is invalid. Starting with an empty cache.");
                 return new HashMap<>();
             }
             Map<String, CacheEntry> loaded = new HashMap<>();
@@ -57,7 +58,7 @@ public class PersistenceManager {
             }
             return loaded;
         } catch (IOException | ClassNotFoundException ex) {
-            LOGGER.log(Level.WARNING, "Failed to load persistence file. Starting with an empty cache.", ex);
+            logger.warn("Failed to load persistence file. Starting with an empty cache.", ex);
             return new HashMap<>();
         }
     }

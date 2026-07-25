@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: mini-redis
+    runtime: docker
+    plan: free
+    healthCheckPath: /actuator/health
+    autoDeploy: true
+    envVars:
+      - key: CACHE_MAX_SIZE
+        value: "1000"
+      - key: CACHE_HISTORY_SIZE
+        value: "20"

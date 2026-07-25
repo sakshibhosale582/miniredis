@@ -1,4 +1,4 @@
-package cache;
+package com.sakshi.miniredis.cache;
 
 import com.sakshi.miniredis.dto.StatsResponse;
 import java.util.concurrent.atomic.AtomicLong;

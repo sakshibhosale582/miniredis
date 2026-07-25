@@ -1,4 +1,4 @@
-package cache;
+package com.sakshi.miniredis.cache;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -89,7 +89,7 @@ public class LRUCache {
     public Map<String, CacheEntry> snapshot() {
         lock.readLock().lock();
         try {
-            return Map.copyOf(store);
+            return new LinkedHashMap<>(store);
         } finally {
             lock.readLock().unlock();
         }

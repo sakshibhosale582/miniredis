@@ -1,0 +1,19 @@
+# Java
+target/
+*.class
+
+# Runtime cache data
+data/
+mini-redis-cache.dat
+
+# Node/Vite
+mini-redis-ui/node_modules/
+mini-redis-ui/dist/
+mini-redis-ui/.env.local
+mini-redis-ui/.env.*.local
+
+# IDE and OS files
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db

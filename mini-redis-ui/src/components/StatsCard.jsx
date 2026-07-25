@@ -25,23 +25,29 @@ function StatsCard() {
 
       const res = await api.get("/stats");
 
-      setStats(res.data.data);
+      setStats(res.data.data || {
+        activeKeys: 0,
+        cacheHits: 0,
+        cacheMisses: 0,
+        totalRequests: 0,
+        hitRatio: 0
+      });
 
-    } catch (e) {
-
-      console.log(e);
-
+    } catch {
+      // Polling failures are reflected by the connection status in the header.
     }
 
   };
 
   useEffect(() => {
 
-    loadStats();
-
+    const initialLoad = window.setTimeout(loadStats, 0);
     const timer = setInterval(loadStats,3000);
 
-    return ()=>clearInterval(timer);
+    return () => {
+      window.clearTimeout(initialLoad);
+      clearInterval(timer);
+    };
 
   },[]);
 

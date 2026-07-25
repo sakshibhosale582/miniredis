@@ -29,11 +29,13 @@ function HistoryCard() {
 
   useEffect(() => {
 
-    loadHistory();
-
+    const initialLoad = window.setTimeout(loadHistory, 0);
     const interval = setInterval(loadHistory,3000);
 
-    return ()=>clearInterval(interval);
+    return () => {
+      window.clearTimeout(initialLoad);
+      clearInterval(interval);
+    };
 
   },[]);
 

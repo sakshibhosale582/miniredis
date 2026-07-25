@@ -29,11 +29,13 @@ function Header() {
 
   useEffect(() => {
 
-    checkBackend();
-
+    const initialCheck = window.setTimeout(checkBackend, 0);
     const interval = setInterval(checkBackend,5000);
 
-    return ()=>clearInterval(interval);
+    return () => {
+      window.clearTimeout(initialCheck);
+      clearInterval(interval);
+    };
 
   },[]);
 

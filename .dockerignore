@@ -1,0 +1,9 @@
+.git
+.github
+target
+data
+mini-redis-cache.dat
+mini-redis-ui/node_modules
+mini-redis-ui/dist
+mini-redis-ui/.env*
+README.md

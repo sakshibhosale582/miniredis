@@ -1,20 +1,17 @@
-package cache;
+package com.sakshi.miniredis.cache;
 
 import java.io.IOException;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.concurrent.ConcurrentHashMap;
 
+import com.sakshi.miniredis.config.CacheProperties;
+import com.sakshi.miniredis.dto.StatsResponse;
+import jakarta.annotation.PostConstruct;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import com.sakshi.miniredis.dto.StatsResponse;
-
-import utils.AppConstants;
-import utils.ValidationUtils;
 
 @Service
 public class CacheManager {
@@ -25,19 +22,20 @@ public class CacheManager {
     private final CacheStats stats;
     private final CommandHistory commandHistory;
     private final PersistenceManager persistenceManager;
-    private final ConcurrentHashMap<String, Object> keyLocks = new ConcurrentHashMap<>();
 
-    public CacheManager() {
-        this(AppConstants.MAX_CACHE_SIZE, AppConstants.DEFAULT_PERSISTENCE_FILE);
+    @Autowired
+    public CacheManager(CacheProperties properties) {
+        this(properties.getMaxSize(), properties.getPersistenceFile(), properties.getHistorySize());
     }
 
-    public CacheManager(int maxCacheSize, String persistenceFile) {
+    public CacheManager(int maxCacheSize, String persistenceFile, int historySize) {
         this.lruCache = new LRUCache(maxCacheSize);
         this.stats = new CacheStats();
-        this.commandHistory = new CommandHistory(AppConstants.MAX_HISTORY_SIZE);
+        this.commandHistory = new CommandHistory(historySize);
         this.persistenceManager = new PersistenceManager(persistenceFile);
     }
 
+    @PostConstruct
     public void initialize() {
         Map<String, CacheEntry> restored = persistenceManager.load();
         if (!restored.isEmpty()) {
@@ -49,12 +47,12 @@ public class CacheManager {
     }
 
     public String set(String key, String value) {
-        ValidationUtils.requireNonEmpty(key, "Key");
-        ValidationUtils.requireNonEmpty(value, "Value");
+        requireNonBlank(key, "Key");
+        requireNonBlank(value, "Value");
 
         CacheEntry entry = CacheEntry.withoutExpiration(value);
         lruCache.put(key.trim(), entry);
-        commandHistory.record("SET " + key.trim() + " " + value);
+        commandHistory.record("SET " + key.trim());
 
         logger.info("Key '{}' stored successfully.", key.trim());
 
@@ -62,8 +60,8 @@ public class CacheManager {
     }
 
     public String set(String key, String value, long ttlSeconds) {
-        ValidationUtils.requireNonEmpty(key, "Key");
-        ValidationUtils.requireNonEmpty(value, "Value");
+        requireNonBlank(key, "Key");
+        requireNonBlank(value, "Value");
 
         if (ttlSeconds <= 0) {
             throw new IllegalArgumentException("TTL must be a positive number of seconds.");
@@ -71,7 +69,7 @@ public class CacheManager {
 
         CacheEntry entry = CacheEntry.withTtl(value, ttlSeconds);
         lruCache.put(key.trim(), entry);
-        commandHistory.record("SET " + key.trim() + " " + value + " " + ttlSeconds);
+        commandHistory.record("SET " + key.trim() + " EX " + ttlSeconds);
 
         logger.info("Key '{}' stored with TTL {} seconds.", key.trim(), ttlSeconds);
 
@@ -79,48 +77,37 @@ public class CacheManager {
     }
 
     public Optional<String> get(String key) {
-        ValidationUtils.requireNonEmpty(key, "Key");
+        requireNonBlank(key, "Key");
         stats.recordRequest();
 
         String normalizedKey = key.trim();
-        Object lock = keyLocks.computeIfAbsent(normalizedKey, ignored -> new Object());
+        Optional<CacheEntry> entryOptional = lruCache.get(normalizedKey);
 
-        synchronized (lock) {
-            Optional<CacheEntry> entryOptional = lruCache.get(normalizedKey);
-
-            if (entryOptional.isEmpty()) {
-                stats.recordMiss();
-                commandHistory.record("GET " + normalizedKey);
-
-                logger.warn("Key '{}' not found.", normalizedKey);
-
-                return Optional.empty();
-            }
-
-            CacheEntry entry = entryOptional.get();
-
-            if (entry.isExpired()) {
-                lruCache.remove(normalizedKey);
-                stats.recordExpiredKeysRemoved(1);
-                stats.recordMiss();
-                commandHistory.record("GET " + normalizedKey);
-
-                logger.warn("Key '{}' expired and removed.", normalizedKey);
-
-                return Optional.empty();
-            }
-
-            stats.recordHit();
+        if (entryOptional.isEmpty()) {
+            stats.recordMiss();
             commandHistory.record("GET " + normalizedKey);
-
-            logger.info("Key '{}' retrieved successfully.", normalizedKey);
-
-            return Optional.of(entry.getValue());
+            logger.debug("Key '{}' not found.", normalizedKey);
+            return Optional.empty();
         }
+
+        CacheEntry entry = entryOptional.get();
+        if (entry.isExpired()) {
+            lruCache.remove(normalizedKey);
+            stats.recordExpiredKeysRemoved(1);
+            stats.recordMiss();
+            commandHistory.record("GET " + normalizedKey);
+            logger.debug("Key '{}' expired and was removed.", normalizedKey);
+            return Optional.empty();
+        }
+
+        stats.recordHit();
+        commandHistory.record("GET " + normalizedKey);
+        logger.debug("Key '{}' retrieved successfully.", normalizedKey);
+        return Optional.of(entry.getValue());
     }
 
     public boolean delete(String key) {
-        ValidationUtils.requireNonEmpty(key, "Key");
+        requireNonBlank(key, "Key");
 
         String normalizedKey = key.trim();
         boolean removed = lruCache.remove(normalizedKey);
@@ -137,7 +124,7 @@ public class CacheManager {
     }
 
     public boolean exists(String key) {
-        ValidationUtils.requireNonEmpty(key, "Key");
+        requireNonBlank(key, "Key");
 
         String normalizedKey = key.trim();
         Optional<CacheEntry> entryOptional = lruCache.get(normalizedKey);
@@ -171,21 +158,6 @@ public class CacheManager {
         return lruCache.keys();
     }
 
-    public Map<String, String> displayAll() {
-        purgeExpiredEntries();
-
-        Map<String, CacheEntry> snapshot = lruCache.snapshot();
-        Map<String, String> result = new LinkedHashMap<>();
-
-        for (Map.Entry<String, CacheEntry> entry : snapshot.entrySet()) {
-            result.put(entry.getKey(), entry.getValue().toString());
-        }
-
-        logger.info("Displaying all cache entries.");
-
-        return result;
-    }
-
     public void clear() {
         lruCache.clear();
         commandHistory.record("CLEAR");
@@ -202,12 +174,9 @@ public class CacheManager {
     }
 
     public StatsResponse stats() {
-
-    purgeExpiredEntries();
-
-    return stats.toResponse(lruCache.size());
-
-}
+        purgeExpiredEntries();
+        return stats.toResponse(lruCache.size());
+    }
     public void save() throws IOException {
         persistenceManager.save(lruCache.snapshot());
         commandHistory.record("SAVE");
@@ -239,19 +208,13 @@ public class CacheManager {
         return removed;
     }
 
-    public CacheStats getStats() {
-        return stats;
-    }
-
-    public LRUCache getLruCache() {
-        return lruCache;
-    }
-
-    public PersistenceManager getPersistenceManager() {
-        return persistenceManager;
-    }
-
     private void purgeExpiredEntries() {
         cleanupExpired();
+    }
+
+    private void requireNonBlank(String value, String fieldName) {
+        if (value == null || value.trim().isEmpty()) {
+            throw new IllegalArgumentException(fieldName + " cannot be empty.");
+        }
     }
 }

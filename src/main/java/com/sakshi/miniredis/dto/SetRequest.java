@@ -1,6 +1,7 @@
 package com.sakshi.miniredis.dto;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
 
 public class SetRequest {
@@ -12,6 +13,9 @@ public class SetRequest {
     @NotBlank(message = "Value cannot be empty")
     @Size(max = 500, message = "Value cannot be longer than 500 characters")
     private String value;
+
+    @Positive(message = "TTL must be a positive number of seconds")
+    private Long ttlSeconds;
 
     public SetRequest() {
     }
@@ -30,5 +34,13 @@ public class SetRequest {
 
     public void setValue(String value) {
         this.value = value;
+    }
+
+    public Long getTtlSeconds() {
+        return ttlSeconds;
+    }
+
+    public void setTtlSeconds(Long ttlSeconds) {
+        this.ttlSeconds = ttlSeconds;
     }
 }

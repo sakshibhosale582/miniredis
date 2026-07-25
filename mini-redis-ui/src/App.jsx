@@ -1,4 +1,3 @@
-import "bootstrap/dist/css/bootstrap.min.css";
 import "react-toastify/dist/ReactToastify.css";
 
 import { ToastContainer } from "react-toastify";
@@ -25,29 +24,31 @@ function App() {
 
       <Header />
 
-      <div className="row g-4">
+      <div className="row g-3">
 
-        <div className="col-lg-4">
-          <CacheForm />
-        </div>
+  <div className="col-lg-4">
+    <CacheForm />
+  </div>
 
-        <div className="col-lg-8">
-          <StatsCard />
-        </div>
+  <div className="col-lg-8">
 
+    <StatsCard />
+
+    <div className="row mt-3 g-3">
+
+      <div className="col-md-5">
+        <KeysCard />
       </div>
 
-      <div className="row g-4 mt-1">
-
-        <div className="col-lg-5">
-          <KeysCard />
-        </div>
-
-        <div className="col-lg-7">
-          <HistoryCard />
-        </div>
-
+      <div className="col-md-7">
+        <HistoryCard />
       </div>
+
+    </div>
+
+  </div>
+
+</div>
 
       <footer className="footer">
 

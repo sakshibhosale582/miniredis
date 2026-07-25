@@ -31,20 +31,23 @@ function KeysCard() {
 
   useEffect(() => {
 
-    loadKeys();
-
+    const initialLoad = window.setTimeout(loadKeys, 0);
     const interval = setInterval(loadKeys,3000);
 
-    return ()=>clearInterval(interval);
+    return () => {
+      window.clearTimeout(initialLoad);
+      clearInterval(interval);
+    };
 
   },[]);
 
-  const copyKey = (key)=>{
-
-    navigator.clipboard.writeText(key);
-
-    toast.success("Key copied");
-
+  const copyKey = async (key) => {
+    try {
+      await navigator.clipboard.writeText(key);
+      toast.success("Key copied");
+    } catch {
+      toast.error("Unable to copy key");
+    }
   };
 
   const filteredKeys = keys.filter((key)=>

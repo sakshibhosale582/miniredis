@@ -6,13 +6,17 @@ import {
   BsDatabaseAdd,
   BsSearch,
   BsTrash,
-  BsArrowClockwise
+  BsArrowClockwise,
+  BsHourglassSplit,
+  BsCloudUpload,
+  BsCloudDownload
 } from "react-icons/bs";
 
 function CacheForm() {
 
   const [key, setKey] = useState("");
   const [value, setValue] = useState("");
+  const [ttl, setTtl] = useState("");
   const [loading, setLoading] = useState(false);
 
   const store = async () => {
@@ -22,19 +26,26 @@ function CacheForm() {
       return;
     }
 
+    if (ttl && Number(ttl) <= 0) {
+      toast.warning("TTL must be a positive number of seconds");
+      return;
+    }
+
     try {
 
       setLoading(true);
 
       const res = await api.post("/set", {
         key,
-        value
+        value,
+        ...(ttl ? { ttlSeconds: Number(ttl) } : {})
       });
 
       toast.success(res.data.message);
 
       setKey("");
       setValue("");
+      setTtl("");
 
     } catch (err) {
 
@@ -59,7 +70,7 @@ function CacheForm() {
 
       setLoading(true);
 
-      const res = await api.get(`/get/${key}`);
+      const res = await api.get(`/get/${encodeURIComponent(key)}`);
 
       setValue(res.data.data);
 
@@ -88,7 +99,7 @@ function CacheForm() {
 
       setLoading(true);
 
-      const res = await api.delete(`/delete/${key}`);
+      const res = await api.delete(`/delete/${encodeURIComponent(key)}`);
 
       toast.success(res.data.message);
 
@@ -122,6 +133,50 @@ function CacheForm() {
     } catch (err) {
 
       toast.error(err.response?.data?.message || "Clear failed");
+
+    } finally {
+
+      setLoading(false);
+
+    }
+
+  };
+
+  const save = async () => {
+
+    try {
+
+      setLoading(true);
+
+      const res = await api.post("/save");
+
+      toast.success(res.data.message);
+
+    } catch (err) {
+
+      toast.error(err.response?.data?.message || "Save failed");
+
+    } finally {
+
+      setLoading(false);
+
+    }
+
+  };
+
+  const load = async () => {
+
+    try {
+
+      setLoading(true);
+
+      const res = await api.post("/load");
+
+      toast.success(res.data.message);
+
+    } catch (err) {
+
+      toast.error(err.response?.data?.message || "Load failed");
 
     } finally {
 
@@ -173,6 +228,27 @@ function CacheForm() {
             placeholder="Enter Cache Value"
             value={value}
             onChange={(e)=>setValue(e.target.value)}
+          />
+
+        </div>
+
+        <div className="mb-4">
+
+          <label className="form-label fw-semibold">
+
+            <BsHourglassSplit className="me-2"/>
+
+            TTL in seconds (optional)
+
+          </label>
+
+          <input
+            type="number"
+            min="1"
+            className="form-control"
+            placeholder="Leave blank for no expiration"
+            value={ttl}
+            onChange={(e)=>setTtl(e.target.value)}
           />
 
         </div>
@@ -240,6 +316,36 @@ function CacheForm() {
               <BsArrowClockwise className="me-2"/>
 
               Clear
+
+            </button>
+
+          </div>
+
+          <div className="col-6">
+
+            <button
+              className="btn btn-outline-dark w-100"
+              disabled={loading}
+              onClick={save}
+            >
+              <BsCloudUpload className="me-2"/>
+
+              Save
+
+            </button>
+
+          </div>
+
+          <div className="col-6">
+
+            <button
+              className="btn btn-outline-dark w-100"
+              disabled={loading}
+              onClick={load}
+            >
+              <BsCloudDownload className="me-2"/>
+
+              Load
 
             </button>
 

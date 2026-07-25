@@ -1,4 +1,4 @@
-package cache;
+package com.sakshi.miniredis.cache;
 
 import java.util.ArrayList;
 import java.util.Collections;

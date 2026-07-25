@@ -1,6 +1,6 @@
 package com.sakshi.miniredis;
 
-import cache.CacheManager;
+import com.sakshi.miniredis.cache.CacheManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -12,7 +12,7 @@ public class CacheManagerTest {
 
     @BeforeEach
     void setup() {
-        cache = new CacheManager();
+        cache = new CacheManager(1000, "target/test-cache.dat", 20);
     }
 
     @Test
@@ -55,5 +55,28 @@ public class CacheManagerTest {
     @Test
     void testKeyNotFound() {
         assertTrue(cache.get("unknown").isEmpty());
+    }
+
+    @Test
+    void testSetWithTtlIsRetrievableBeforeExpiry() {
+        cache.set("session", "abc123", 60);
+        assertEquals("abc123", cache.get("session").orElse(null));
+        assertTrue(cache.exists("session"));
+    }
+
+    @Test
+    void testSetWithTtlExpiresAfterDuration() throws InterruptedException {
+        cache.set("otp", "9821", 1);
+        assertTrue(cache.exists("otp"));
+
+        Thread.sleep(1100);
+
+        assertTrue(cache.get("otp").isEmpty());
+        assertFalse(cache.exists("otp"));
+    }
+
+    @Test
+    void testSetWithNonPositiveTtlThrows() {
+        assertThrows(IllegalArgumentException.class, () -> cache.set("bad", "value", 0));
     }
 }

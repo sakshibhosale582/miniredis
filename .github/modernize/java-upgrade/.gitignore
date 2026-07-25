@@ -1,0 +1,15 @@
+target/
+*.class
+*.log
+
+# IDE files
+.vscode/
+.idea/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# React
+mini-redis-ui/node_modules/
+mini-redis-ui/build/
