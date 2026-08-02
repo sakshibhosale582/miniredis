@@ -1,573 +1,1081 @@
-Mini Redis
+<div align="center">
 
-Mini Redis is a Redis-inspired full-stack in-memory key-value cache management system built with Java 17, Spring Boot, React, and Vite. It provides a browser dashboard and REST API for managing cache entries with LRU eviction, optional TTL expiration, cache statistics, command history, persistence, Docker deployment, Swagger/OpenAPI, and health monitoring.
+# ⚡ Mini Redis
 
-Mini Redis is an educational Redis-inspired implementation. It demonstrates core caching concepts and is not intended to replace the official Redis server.
+### 🧠 Redis-Inspired In-Memory Cache Management System
 
-Live Project
+**Spring Boot • React • LRU Cache • TTL • REST API • Docker • Render**
 
-Live Dashboard: https://miniredis-274e.onrender.com/
+[![Java](https://img.shields.io/badge/Java-17-orange?logo=openjdk&logoColor=white)](https://www.java.com/)
+[![Spring Boot](https://img.shields.io/badge/Spring%20Boot-Backend-6DB33F?logo=springboot&logoColor=white)](https://spring.io/projects/spring-boot)
+[![React](https://img.shields.io/badge/React-Frontend-61DAFB?logo=react&logoColor=black)](https://react.dev/)
+[![Vite](https://img.shields.io/badge/Vite-Build-646CFF?logo=vite&logoColor=white)](https://vite.dev/)
+[![Docker](https://img.shields.io/badge/Docker-Ready-2496ED?logo=docker&logoColor=white)](https://www.docker.com/)
+[![Render](https://img.shields.io/badge/Render-Deployed-46E3B7?logo=render&logoColor=black)](https://render.com/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-GitHub Repository: https://github.com/sakshibhosale582/miniredis
+<br>
 
-Application Preview
+[🚀 **Live Demo**](https://miniredis-274e.onrender.com/) •
+[💻 **Source Code**](https://github.com/sakshibhosale582/miniredis) •
+[📖 **API Docs**](https://miniredis-274e.onrender.com/swagger-ui.html)
 
-Dashboard Overview
+</div>
 
-The dashboard provides a single interface for cache operations and displays backend connection status.
+---
 
+## 📌 About the Project
 
+**Mini Redis** is a Redis-inspired, full-stack **in-memory key-value cache management system** built using **Java 17, Spring Boot, React, and Vite**.
 
-Cache Operations and System Statistics
+The project demonstrates how a caching system works internally instead of simply using Redis as an external service.
 
-Users can store, retrieve, delete, clear, save, and load cache entries. TTL is optional. The dashboard displays active keys, cache hits, cache misses, and hit ratio.
+It provides a browser-based dashboard and REST API for managing cache entries and includes important caching concepts such as:
 
+- ⚡ In-memory key-value storage
+- 🔄 LRU cache management
+- ⏳ TTL-based expiration
+- 📊 Cache statistics
+- 🕘 Command history
+- 💾 File-based persistence
+- 🔌 REST APIs
+- 🐳 Docker deployment
+- ☁️ Render deployment
+- 📖 Swagger/OpenAPI documentation
+- ❤️ Spring Boot Actuator health monitoring
 
+> 💡 **Note:** Mini Redis is an educational Redis-inspired implementation designed to demonstrate core caching concepts. It is not intended to replace the official Redis server.
 
-Current Keys and Command History
+---
 
-The interface displays current cache keys and a recent history of operations such as SET, GET, DELETE, CLEAR, SAVE, and LOAD.
+## 🔗 Quick Links
 
+| Resource | Link |
+| --- | --- |
+| 🚀 Live Application | [Open Mini Redis](https://miniredis-274e.onrender.com/) |
+| 💻 GitHub Repository | [View Source Code](https://github.com/sakshibhosale582/miniredis) |
+| ❤️ Health Check | [Actuator Health](https://miniredis-274e.onrender.com/actuator/health) |
+| 📖 Swagger UI | [API Documentation](https://miniredis-274e.onrender.com/swagger-ui.html) |
 
+---
 
-Features
+# 🖥️ Application Preview
 
-In-memory key-value cache
+## 🏠 Dashboard Overview
 
-LRU (Least Recently Used) cache management
+The Mini Redis dashboard provides a simple interface for interacting with the cache.
 
-Optional TTL (Time To Live) expiration
+From the dashboard, users can:
 
-Store, retrieve, delete, check, list, and clear keys
+- Store new cache entries
+- Retrieve values
+- Delete keys
+- Clear the complete cache
+- Save cache data
+- Load persisted data
+- View backend connection status
 
-Manual save and load persistence operations
+![Mini Redis Dashboard](docs/screenshots/dashboard-overview.png)
 
-Cache hits, misses, active keys, and hit-ratio statistics
+---
 
-Recent command history
+## 📊 Cache Operations & System Statistics
 
-RESTful Spring Boot API
+The dashboard allows users to perform cache operations using a **key, value, and optional TTL**.
 
-React + Vite dashboard
+It also provides real-time cache information such as:
 
-Consistent success and error responses
+- Active keys
+- Cache hits
+- Cache misses
+- Hit ratio
+- Backend connection status
 
-Typed cache and CORS configuration
+![Cache Operations and Statistics](docs/screenshots/cache-statistics.png)
 
-Swagger/OpenAPI documentation
+---
 
-Spring Boot Actuator health endpoint
+## 🗂️ Current Keys & Command History
 
-Docker multi-stage production build
+Mini Redis displays the currently active cache keys and keeps track of recent operations.
 
-Render Blueprint deployment
+The command history can include operations such as:
+
+```text
+SET
+GET
+DELETE
+CLEAR
+SAVE
+LOAD
+```
+
+This makes it easier to understand and monitor cache activity.
+
+![Current Keys and Command History](docs/screenshots/keys-command-history.png)
+
+---
+
+# ✨ Features
+
+- ⚡ **In-memory key-value cache**
+- 🔄 **LRU (Least Recently Used) cache management**
+- ⏳ **Optional TTL (Time To Live) expiration**
+- ➕ Store cache entries
+- 🔎 Retrieve cache values
+- 🗑️ Delete cache entries
+- ✅ Check whether a key exists
+- 🗂️ List active cache keys
+- 🧹 Clear the cache
+- 💾 Manual **save and load** persistence
+- 📈 Cache **hits, misses, active keys, and hit ratio**
+- 🕘 Recent **command history**
+- 🔌 RESTful Spring Boot API
+- 🖥️ React + Vite dashboard
+- 📦 Consistent API response structure
+- 🛡️ Centralized exception handling
+- 🔧 Runtime cache configuration
+- 🌐 CORS configuration
+- 📚 Swagger/OpenAPI documentation
+- ❤️ Spring Boot Actuator health endpoint
+- 🐳 Multi-stage Docker production build
+- ☁️ Render Blueprint deployment
+- 🧪 Backend tests and frontend verification
+
+---
+
+# ⚙️ How Mini Redis Works
+
+Mini Redis stores key-value data primarily in **application memory**.
+
+Because the data is kept in memory, cache operations can be performed quickly without repeatedly accessing persistent storage.
+
+A simplified request flow looks like this:
+
+```text
+            React Dashboard
+                   |
+                   |
+                   v
+             REST API Request
+                   |
+                   v
+          +------------------+
+          | CacheController  |
+          +------------------+
+                   |
+                   v
+          +------------------+
+          |   CacheManager   |
+          |  Business Logic  |
+          +------------------+
+                   |
+          +--------+---------+
+          |                  |
+          v                  v
+      LRU Cache          Cache Stats
+          |
+          +------------------+
+          |                  |
+          v                  v
+  Command History     Persistence
+```
 
-Maven tests and frontend lint/build verification
+The **React dashboard** communicates with the **Spring Boot REST API**.
 
-How It Works
+The Controller receives the HTTP request and forwards the required operation to the cache management layer.
 
-Mini Redis stores key-value data in application memory for fast access. Entries may optionally have a TTL, after which they are treated as expired. The cache is LRU-backed, allowing older, less recently used entries to be evicted when the configured maximum size is reached.
+The cache system then manages:
 
-React Dashboard / API Client
-            |
-            v
-      CacheController
-            |
-            v
-       CacheManager
-            |
-      +-----+------+
-      |            |
-      v            v
-   LRU Cache   Cache Statistics
-      |
-      +----> Persistence / Command History
+- Key-value storage
+- LRU ordering
+- TTL expiration
+- Cache statistics
+- Persistence
+- Command history
 
-In the recommended production deployment, the React application is built into Spring Boot static resources so a single web service serves both the dashboard and REST API.
+---
 
-Technology Stack
+# 🔄 LRU Cache Management
 
-Layer
+Mini Redis uses an **LRU — Least Recently Used** cache strategy.
 
-Technology
+Suppose the maximum cache capacity is three entries:
 
-Backend
+```text
+A → Apple
+B → Ball
+C → Cat
+```
 
-Java 17, Spring Boot
+If `A` is accessed again, it becomes recently used.
 
-Frontend
+Conceptually:
 
-React, Vite
+```text
+B → C → A
+↑       ↑
+LRU     Most Recently Used
+```
 
-Communication
+Now suppose a new entry is added:
 
-REST API / JSON
+```text
+D → Dog
+```
 
-Cache
+If the cache has reached its configured maximum capacity, the least recently used entry can be removed.
 
-In-memory LRU-backed key-value cache
+```text
+B ❌ Removed
 
-Build Tools
+C
+A
+D
+```
 
-Maven, npm
+This helps keep frequently/recently accessed data available while controlling cache size.
 
-API Documentation
+---
 
-Swagger / OpenAPI
+# ⏳ TTL — Time To Live
 
-Monitoring
+Cache entries can optionally contain a **TTL value**.
 
-Spring Boot Actuator
+TTL defines how long an entry should remain valid.
 
-Containerization
+Example:
 
-Docker
+```text
+Key   = otp
+Value = 458921
+TTL   = 60 seconds
+```
 
-Deployment
+During the TTL period:
 
-Render
+```text
+GET otp
+→ 458921
+```
 
-Verification
+After expiration, the entry is no longer treated as valid.
 
-Maven tests, frontend lint and build
+TTL is useful for temporary information such as:
 
-Project Structure
+- OTPs
+- Sessions
+- Temporary tokens
+- Frequently changing API responses
+- Short-lived cached data
 
+If `ttlSeconds` is omitted when creating an entry, the key does not expire based on TTL.
+
+---
+
+# 📊 Cache Statistics
+
+Mini Redis tracks cache performance information.
+
+Important statistics include:
+
+### Cache Hit
+
+A **cache hit** occurs when the requested key exists and its value can be returned.
+
+```text
+GET name
+
+name → Sakshi
+
+Result: HIT ✅
+```
+
+### Cache Miss
+
+A **cache miss** occurs when the requested key is not available.
+
+```text
+GET salary
+
+salary → Not Found
+
+Result: MISS ❌
+```
+
+### Hit Ratio
+
+The hit ratio helps measure cache effectiveness.
+
+```text
+Hit Ratio = Cache Hits / Total Cache Lookups
+```
+
+For example:
+
+```text
+Hits   = 80
+Misses = 20
+
+Total = 100
+Hit Ratio = 80%
+```
+
+---
+
+# 💾 Persistence
+
+Mini Redis primarily stores data in memory.
+
+The project also provides manual persistence operations:
+
+```text
+SAVE
+LOAD
+```
+
+The save operation writes active cache data to a configured persistence file.
+
+The load operation restores saved cache information.
+
+Conceptually:
+
+```text
+        CACHE
+          |
+          v
+ PersistenceManager
+          |
+          v
+         FILE
+```
+
+During restoration:
+
+```text
+         FILE
+          |
+          v
+ PersistenceManager
+          |
+          v
+        CACHE
+```
+
+---
+
+# 🧰 Technology Stack
+
+| Layer | Technology |
+| --- | --- |
+| ☕ Backend | Java 17 |
+| 🌱 Framework | Spring Boot |
+| ⚛️ Frontend | React |
+| ⚡ Frontend Build Tool | Vite |
+| 🔌 Communication | REST API / JSON |
+| 🧠 Cache | In-memory LRU-backed key-value cache |
+| 📦 Backend Build | Maven |
+| 📦 Frontend Packages | npm |
+| 📖 API Documentation | Swagger / OpenAPI |
+| ❤️ Monitoring | Spring Boot Actuator |
+| 🐳 Containerization | Docker |
+| ☁️ Deployment | Render |
+| 🧪 Verification | Maven Tests + Frontend Lint/Build |
+
+---
+
+# 📁 Project Structure
+
+```text
 mini-redis/
-├── src/main/java/com/sakshi/miniredis/
-│   ├── cache/             # Cache domain, LRU and persistence classes
-│   ├── config/            # Typed cache and CORS configuration
-│   ├── controller/        # REST endpoints
-│   ├── dto/               # Data transfer objects
-│   ├── exception/         # Exception handling
-│   ├── response/          # Standard API responses
-│   └── MiniRedisApplication.java
-├── src/main/resources/
-│   └── application.properties
-├── mini-redis-ui/         # React + Vite client
-├── docs/screenshots/      # README screenshots
-├── Dockerfile             # Builds UI and API into one runtime image
-├── render.yaml            # Render Blueprint
+│
+├── src/
+│   └── main/
+│       │
+│       ├── java/com/sakshi/miniredis/
+│       │   │
+│       │   ├── cache/
+│       │   │   └── Cache domain, LRU and persistence logic
+│       │   │
+│       │   ├── config/
+│       │   │   └── Cache and CORS configuration
+│       │   │
+│       │   ├── controller/
+│       │   │   └── REST API endpoints
+│       │   │
+│       │   ├── dto/
+│       │   │   └── Data Transfer Objects
+│       │   │
+│       │   ├── exception/
+│       │   │   └── Exception handling
+│       │   │
+│       │   ├── response/
+│       │   │   └── Standard API responses
+│       │   │
+│       │   └── MiniRedisApplication.java
+│       │
+│       └── resources/
+│           └── application.properties
+│
+├── mini-redis-ui/
+│   └── React + Vite frontend
+│
+├── docs/
+│   └── screenshots/
+│
+├── Dockerfile
+├── render.yaml
 ├── pom.xml
 └── README.md
+```
 
-Requirements
+---
 
-Java 17
+# ✅ Requirements
 
-Maven 3.9+
+Before running Mini Redis locally, install:
 
-Node.js 20.19+ or 22.12+
+- ☕ **Java 17**
+- 📦 **Maven 3.9+**
+- 🟢 **Node.js 20.19+ or 22.12+**
+- 📦 **npm**
+- 🐳 **Docker** *(optional)*
 
-npm
+Check installed versions:
 
-Docker (optional)
-
-Check installations:
-
+```bash
 java -version
 mvn -version
 node -v
 npm -v
+```
 
-Setup Instructions
+---
 
-Backend
+# 🚀 Setup Instructions
 
-From the repository root:
+## ☕ 1. Start the Spring Boot Backend
 
+Clone the repository:
+
+```bash
+git clone https://github.com/sakshibhosale582/miniredis.git
+```
+
+Move into the project:
+
+```bash
+cd miniredis
+```
+
+Start Spring Boot:
+
+```bash
 mvn spring-boot:run
+```
 
-Backend:
+The API starts at:
 
+```text
 http://localhost:8080
+```
 
-Health endpoint:
+---
 
+## ❤️ Backend Health Check
+
+Open:
+
+```text
 http://localhost:8080/actuator/health
+```
 
-Swagger UI:
+---
 
+## 📖 Swagger API Documentation
+
+Swagger UI is available at:
+
+```text
 http://localhost:8080/swagger-ui.html
+```
 
-Frontend
+Swagger provides an interactive interface for viewing and testing the REST endpoints.
+
+---
+
+## ⚛️ 2. Start the React Frontend
 
 Open another terminal:
 
+```bash
 cd mini-redis-ui
+```
+
+Install dependencies:
+
+```bash
 npm install
+```
+
+Start the Vite development server:
+
+```bash
 npm run dev
+```
 
-Dashboard:
+The dashboard will run at:
 
+```text
 http://localhost:5173
+```
 
-Vite proxies /api requests to http://localhost:8080, so no browser CORS exception is required during the standard local-development workflow.
+During normal local development, Vite proxies `/api` requests to:
 
-API Reference
+```text
+http://localhost:8080
+```
 
-All application endpoints are under /api/cache.
+Therefore, a browser CORS exception is not required for the standard local-development workflow.
 
-Method
+---
 
-Endpoint
+# 🔌 API Reference
 
-Purpose
+All application endpoints are available under:
 
-GET
+```text
+/api/cache
+```
 
-/api/cache/health
+| Method | Endpoint | Description |
+| --- | --- | --- |
+| 🟢 `GET` | `/api/cache/health` | Check application health |
+| 🔵 `POST` | `/api/cache/set` | Store a key-value pair |
+| 🟢 `GET` | `/api/cache/get/{key}` | Retrieve a cache value |
+| 🔴 `DELETE` | `/api/cache/delete/{key}` | Delete a cache entry |
+| 🟢 `GET` | `/api/cache/exists/{key}` | Check whether a key exists |
+| 🟢 `GET` | `/api/cache/keys` | List active cache keys |
+| 🟢 `GET` | `/api/cache/stats` | View cache statistics |
+| 🟢 `GET` | `/api/cache/history` | View command history |
+| 🔵 `POST` | `/api/cache/save` | Save cache data |
+| 🔵 `POST` | `/api/cache/load` | Restore saved cache data |
+| 🔵 `POST` | `/api/cache/clear` | Clear the cache |
 
-Application health response
+---
 
-POST
+# ➕ Store an Entry
 
-/api/cache/set
+### Request
 
-Store a key-value pair with optional TTL
-
-GET
-
-/api/cache/get/{key}
-
-Retrieve a value
-
-DELETE
-
-/api/cache/delete/{key}
-
-Delete a key
-
-GET
-
-/api/cache/exists/{key}
-
-Check whether a key exists
-
-GET
-
-/api/cache/keys
-
-List active keys
-
-GET
-
-/api/cache/stats
-
-Cache statistics
-
-GET
-
-/api/cache/history
-
-Recent commands
-
-POST
-
-/api/cache/save
-
-Persist active cache data to disk
-
-POST
-
-/api/cache/load
-
-Restore cache data from disk
-
-POST
-
-/api/cache/clear
-
-Clear the cache
-
-Store an Entry
-
+```http
 POST /api/cache/set
 Content-Type: application/json
+```
 
+### Body
+
+```json
 {
   "key": "name",
   "value": "Sakshi",
   "ttlSeconds": 60
 }
+```
 
-ttlSeconds is optional. Omit it for a key that should not expire based on TTL.
+`ttlSeconds` is optional.
 
-Retrieve an Entry
+For a key that should not expire based on TTL:
 
+```json
+{
+  "key": "name",
+  "value": "Sakshi"
+}
+```
+
+---
+
+# 🔎 Retrieve an Entry
+
+```http
 GET /api/cache/get/name
+```
 
-Delete an Entry
+---
 
+# 🗑️ Delete an Entry
+
+```http
 DELETE /api/cache/delete/name
+```
 
-API Response Format
+---
 
-Successful responses use:
+# 📦 API Response Format
 
+Successful API responses follow a consistent structure:
+
+```json
 {
   "success": true,
   "message": "Operation completed successfully",
   "data": {}
 }
+```
 
-Failures consistently include a status, message, request path, and timestamp.
+Failure responses consistently include information such as:
 
-Configuration
+```json
+{
+  "status": 404,
+  "message": "Requested resource was not found",
+  "path": "/api/cache/get/example",
+  "timestamp": "..."
+}
+```
 
-Backend values are read at runtime.
+This makes API responses predictable for both the React frontend and other API clients.
 
-Variable
+---
 
-Default
+# 🔧 Backend Configuration
 
-Purpose
+Backend configuration is read at runtime.
 
-PORT
+| Environment Variable | Default | Purpose |
+| --- | --- | --- |
+| `PORT` | `8080` | HTTP server port |
+| `CACHE_MAX_SIZE` | `1000` | Maximum number of LRU cache entries |
+| `CACHE_HISTORY_SIZE` | `20` | Number of recent commands retained |
+| `CACHE_PERSISTENCE_FILE` | `./data/mini-redis-cache.dat` | Persistence file location |
+| `CORS_ALLOWED_ORIGINS` | `http://localhost:5173` | Origins allowed to access `/api/**` |
 
-8080
+Render automatically provides the `PORT` value during deployment.
 
-HTTP port; Render supplies this automatically
+---
 
-CACHE_MAX_SIZE
+# 🌐 Frontend Configuration
 
-1000
+The React build reads public configuration at **build time**.
 
-Maximum LRU cache entries
+Copy:
 
-CACHE_HISTORY_SIZE
+```text
+mini-redis-ui/.env.example
+```
 
-20
+to:
 
-Number of commands retained in history
+```text
+mini-redis-ui/.env.local
+```
 
-CACHE_PERSISTENCE_FILE
+only when an override is required.
 
-./data/mini-redis-cache.dat
+| Variable | Default | Purpose |
+| --- | --- | --- |
+| `VITE_API_BASE_URL` | `/api/cache` | API base URL used by Axios |
+| `VITE_DEV_API_PROXY_TARGET` | `http://localhost:8080` | Backend target used by Vite |
 
-Location for saved cache data
+> 🔐 **Security Warning:** Never place passwords, tokens, API keys, or other secrets inside a `VITE_*` environment variable because Vite exposes these values to the browser bundle.
 
-CORS_ALLOWED_ORIGINS
+---
 
-http://localhost:5173
+# 🏗️ Production Build
 
-Comma-separated origins allowed to call /api/**
+## ⚛️ Build the Frontend
 
-Frontend Configuration
-
-Copy mini-redis-ui/.env.example to .env.local only when an override is required.
-
-Variable
-
-Default
-
-Purpose
-
-VITE_API_BASE_URL
-
-/api/cache
-
-API base URL used by Axios
-
-VITE_DEV_API_PROXY_TARGET
-
-http://localhost:8080
-
-Backend URL used by the Vite development proxy
-
-Security: Never place secrets in a VITE_* variable. Vite exposes these values to the browser bundle.
-
-Building for Production
-
-Frontend:
-
+```bash
 cd mini-redis-ui
 npm install
 npm run build
+```
 
-Backend:
+---
 
+## ☕ Build the Backend
+
+From the repository root:
+
+```bash
 mvn clean package
+```
 
 Run the generated Spring Boot JAR:
 
+```bash
 java -jar target/*.jar
+```
 
-The recommended production workflow uses the root Dockerfile to build the frontend and backend together.
+The recommended production workflow uses the project's root `Dockerfile` to build the frontend and backend together.
 
-Docker
+---
 
-The multi-stage Docker image installs locked frontend dependencies, creates a production Vite bundle, copies that bundle into Spring Boot static resources, builds the JAR, and runs the resulting application as a non-root user.
+# 🐳 Docker
 
+Mini Redis includes a **multi-stage Docker build**.
+
+The production Docker workflow:
+
+```text
+Install frontend dependencies
+          ↓
+Build React/Vite application
+          ↓
+Copy frontend build into Spring Boot
+          ↓
+Build Spring Boot JAR
+          ↓
+Create runtime image
+          ↓
+Run application as non-root user
+```
+
+Build the Docker image:
+
+```bash
 docker build -t mini-redis .
+```
+
+Run the container:
+
+```bash
 docker run --rm -p 8080:8080 -v mini-redis-data:/app/data mini-redis
+```
 
-Open http://localhost:8080.
+Open:
 
-The volume is optional but recommended for local Docker use because it preserves data written by the save endpoint across container replacement.
+```text
+http://localhost:8080
+```
 
-Deployment
+The Docker volume is optional but recommended when running locally because it preserves data written through the save operation across container replacement.
 
-Mini Redis is deployed on Render:
+---
 
-https://miniredis-274e.onrender.com/
+# ☁️ Deployment
 
-The production setup serves the React dashboard and Spring Boot API from the same Render web service.
+Mini Redis is deployed on **Render**.
 
-Browser
-   |
-   v
-Render Web Service
-   |
-   +---- React Dashboard
-   |
-   +---- Spring Boot REST API
-              |
-              v
-        In-Memory Cache
+## 🚀 Live Application
 
-Deploy with Render Blueprint
+### https://miniredis-274e.onrender.com/
 
-Push the repository to GitHub, GitLab, or Bitbucket.
+The recommended production architecture serves the compiled React dashboard and Spring Boot API from the **same Render web service**.
 
-In Render, select New → Blueprint.
+```text
+                  Browser
+                     |
+                     v
+             Render Web Service
+                     |
+             +-------+-------+
+             |               |
+             v               v
+      React Dashboard   Spring Boot API
+                             |
+                             v
+                      In-Memory Cache
+```
 
-Select the repository.
+---
 
-Render reads render.yaml.
+# 🚀 Deploy Using Render Blueprint
 
-The root Dockerfile builds the UI and API.
+### Step 1
 
-Render probes /actuator/health.
+Push the repository to:
 
-Deploy the service.
+- GitHub
+- GitLab
+- Bitbucket
 
-Because the dashboard and API share one origin, the relative VITE_API_BASE_URL=/api/cache works without separate production CORS configuration.
+### Step 2
 
-Separately Hosted React Frontend
+Sign in to Render.
 
-Set before building:
+### Step 3
 
+Select:
+
+```text
+New → Blueprint
+```
+
+### Step 4
+
+Select the Mini Redis repository.
+
+### Step 5
+
+Render reads:
+
+```text
+render.yaml
+```
+
+### Step 6
+
+The root:
+
+```text
+Dockerfile
+```
+
+builds the React frontend and Spring Boot backend.
+
+### Step 7
+
+Render checks:
+
+```text
+/actuator/health
+```
+
+### Step 8
+
+Deploy the application.
+
+Because both the dashboard and API are served from the same origin:
+
+```text
+VITE_API_BASE_URL=/api/cache
+```
+
+works without separate production CORS configuration.
+
+---
+
+# 🌍 Separately Hosted React Frontend
+
+If the React application is hosted separately, configure:
+
+```text
 VITE_API_BASE_URL=https://<your-api>.onrender.com/api/cache
+```
 
-Configure the backend with the exact frontend origin:
+This value must be configured **before building the React application**.
 
+The backend must also allow the frontend origin:
+
+```text
 CORS_ALLOWED_ORIGINS=https://<your-frontend-domain>
+```
 
-Comma-separate additional allowed origins when required.
+Multiple allowed origins can be comma-separated.
 
-Persistence Note
+---
 
-Mini Redis is primarily an in-memory cache.
+# 💾 Important Persistence Note
 
-The /save and /load operations provide file-based persistence, but Render's default filesystem is ephemeral. Saved files should therefore not be considered durable across restarts or redeployments.
+Mini Redis is primarily an **in-memory cache**.
 
-Use a persistent disk on a suitable service or an external datastore when durable production cache data is required.
+The application provides:
 
-Verification
+```text
+/save
+/load
+```
 
-Backend:
+operations for file-based persistence.
 
+However, Render's default filesystem is **ephemeral**.
+
+This means files stored on the default Render filesystem should **not be considered durable across restarts or redeployments**.
+
+For durable production storage, use:
+
+- A persistent disk on an appropriate hosting service
+- An external database
+- An external persistent datastore
+
+---
+
+# 🧪 Verification
+
+Run backend tests:
+
+```bash
 mvn clean test
+```
 
-Frontend:
+Verify the React frontend:
 
+```bash
 cd mini-redis-ui
 npm run lint
 npm run build
+```
 
-Key Concepts Demonstrated
+A successful verification should complete:
 
-Key-value caching
+```text
+Backend Tests     ✅
+Frontend Lint     ✅
+Frontend Build    ✅
+```
 
-In-memory data management
+---
 
-LRU cache eviction
+# 🎯 Key Concepts Demonstrated
 
-TTL-based expiration
+This project demonstrates several important software development and backend concepts:
 
-Cache hits and misses
+### 🧠 Data Structures & Algorithms
 
-Hit-ratio monitoring
+- Key-value storage
+- LRU caching
+- Cache eviction
+- TTL expiration
 
-REST API design
+### ☕ Java & Spring Boot
 
-Spring Boot backend architecture
+- Object-oriented programming
+- Layered architecture
+- REST controllers
+- Dependency injection
+- Exception handling
+- Configuration management
 
-React-to-backend communication
+### ⚡ Caching
 
-File-based persistence
+- Cache hits
+- Cache misses
+- Hit ratio
+- Active cache entries
+- Cache capacity management
 
-Centralized API error handling
+### 🔌 API Development
 
-Runtime configuration
+- REST APIs
+- HTTP methods
+- JSON request/response handling
+- Standard API responses
+- Swagger documentation
 
-Dockerized full-stack deployment
+### ⚛️ Full-Stack Development
 
-Health monitoring and API documentation
+- React frontend
+- Axios/API communication
+- Vite development environment
+- Frontend/backend integration
 
-Limitations
+### 🐳 DevOps
 
-Mini Redis is an educational Redis-inspired implementation and does not provide the complete functionality of production Redis. It does not aim to implement features such as distributed clustering, replication, high availability, Pub/Sub, the Redis wire protocol, or the full range of Redis data structures.
+- Maven
+- npm
+- Docker
+- Multi-stage builds
+- Render deployment
+- Health monitoring
 
-Its purpose is to demonstrate the core ideas behind in-memory caching and cache management through a full-stack application.
+---
 
-Future Enhancements
+# ⚠️ Limitations
 
-Distributed cache support
+Mini Redis is an **educational Redis-inspired implementation**.
 
-Authentication and authorization
+It does not provide the complete functionality of production Redis.
 
-Additional cache eviction strategies
+The current project does not aim to implement advanced Redis capabilities such as:
 
-More automated testing
+- Distributed clustering
+- Replication
+- High availability
+- Redis Pub/Sub
+- Redis wire protocol
+- Advanced persistence strategies
+- Full Redis data structures
+- Enterprise-scale distributed caching
 
-Advanced monitoring and metrics
+The main purpose of this project is to understand and demonstrate the **internal concepts behind in-memory caching and cache management**.
 
-Durable external persistence
+---
 
-Rate limiting
+# 🔮 Future Enhancements
 
-CI/CD automation
+Possible future improvements include:
 
-Additional Redis-like data structures
+- 🔐 JWT authentication and authorization
+- 🌐 Distributed cache support
+- 🔄 Additional eviction strategies such as LFU and FIFO
+- 📊 Advanced cache analytics
+- 📈 Enhanced monitoring and metrics
+- 💾 Durable external persistence
+- 🚦 API rate limiting
+- 🧪 Extended automated testing
+- ⚙️ CI/CD pipeline
+- 🗃️ Additional Redis-like data structures
+- 📱 Improved responsive dashboard
+- 🔔 Real-time cache activity monitoring
 
-Enhanced cache visualization and analytics
+---
 
-Contributing
+# 🤝 Contributing
 
-Fork the repository.
+Contributions are welcome.
 
-Create a feature branch:
+### 1. Fork the repository
 
+### 2. Create a feature branch
+
+```bash
 git checkout -b feature-name
+```
 
-Make and commit your changes:
+### 3. Make your changes
 
+### 4. Commit your changes
+
+```bash
 git commit -m "Add feature description"
+```
 
-Push the branch:
+### 5. Push your branch
 
+```bash
 git push origin feature-name
+```
 
-Open a Pull Request.
+### 6. Open a Pull Request
 
-Author
+---
 
-Sakshi Bhosale
+# 👩‍💻 Author
 
-GitHub: https://github.com/sakshibhosale582
+## Sakshi Bhosale
 
-Repository: https://github.com/sakshibhosale582/miniredis
+💻 **GitHub**
 
-Live Project: https://miniredis-274e.onrender.com/
+https://github.com/sakshibhosale582
 
-License
+📂 **Project Repository**
 
-This project is licensed under the MIT License.
+https://github.com/sakshibhosale582/miniredis
 
-See the LICENSE file in the repository for the complete license text.
+🚀 **Live Project**
 
-Mini Redis
+https://miniredis-274e.onrender.com/
 
-A practical Redis-inspired cache management system built with Spring Boot and React to explore in-memory caching, LRU eviction, TTL expiration, persistence, REST APIs, monitoring, and full-stack deployment.
+---
+
+# 📄 License
+
+This project is licensed under the **MIT License**.
+
+See the `LICENSE` file in the repository for the complete license text.
+
+---
+
+<div align="center">
+
+# ⚡ Mini Redis
+
+### Built with ☕ Spring Boot + ⚛️ React
+
+*A practical Redis-inspired project for exploring in-memory caching, LRU eviction, TTL expiration, persistence, REST APIs, monitoring, and full-stack deployment.*
+
+⭐ **If you find this project useful, consider starring the repository.**
+
+</div>
